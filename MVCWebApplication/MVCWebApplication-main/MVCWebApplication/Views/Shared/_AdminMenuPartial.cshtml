@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MVCWebApplication.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin"))
+{
+    <li class="nav-item dropdown show">
+        <a class="dropdown-toggle nav-link text-dark" href="#" data-toggle="dropdown">ადმინის პანელი</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="fas fa-box mr-2"></i>ღონისძიების მართვის პანელი</a>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="UsersToCategory" asp-action="Index"><i class="fas fa-users mr-2"></i>მომხმარებლის მართვის პანელი</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="MediaType" asp-action="Index"><i class="fas fa-file-video mr-2"></i>ღონისძიება</a>
+        </div>
+    </li>
+}
+else if(!SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#Events"><i class="fas fa-laptop-code mr-1 text-info"></i>ღონისძიებები</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#ContactUs"><i class="fas fa-phone-alt mr-1 text-info"></i>დაგვიკავშირდით</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#AboutUs"><i class="fas fa-chalkboard-teacher mr-1 text-info"></i>ჩვენს შესახებ</a>
+    </li>
+}
